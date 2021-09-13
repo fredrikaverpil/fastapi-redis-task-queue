@@ -1,7 +1,12 @@
 version: '3'
 
+networks:
+  mynetwork:
+
 services:
   myproj_redis:
+    networks:
+      - mynetwork
     image: redis:4.0.6-alpine
     ports:
       - "6379:6379"
@@ -9,19 +14,19 @@ services:
       - ./redis:/data
 
   myproj_api:
+    networks:
+      - mynetwork
     image: myproj:latest
     command: uvicorn api:app --host 0.0.0.0 --port 5057
     ports:
       - "5057:5057"
     depends_on:
       - myproj_redis
-    links:
-      - myproj_redis
 
   myproj_worker:
+    networks:
+      - mynetwork
     image: myproj:latest
     command: rq worker --url redis://myproj_redis:6379 my_queue
     depends_on:
-      - myproj_redis
-    links:
       - myproj_redis
