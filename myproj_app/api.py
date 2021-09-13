@@ -5,7 +5,7 @@ from fastapi import FastAPI, HTTPException
 from loguru import logger
 from pydantic import BaseModel
 from rq import Queue
-from worker import runTask
+from worker import run_task
 
 from redis import Redis
 
@@ -31,7 +31,7 @@ async def hello():
 
 
 @app.post("/groups/{group_name}", status_code=201)
-async def addTask(group_name: str, group: Group):
+async def add_task(group_name: str, group: Group):
     """
     Adds tasks to worker queue.
     Expects body as dictionary matching the Group class.
@@ -39,6 +39,6 @@ async def addTask(group_name: str, group: Group):
     if group_name not in ("group1", "group2"):
         raise HTTPException(status_code=404, detail="Group not found")
 
-    job = q.enqueue(runTask, group_name, group.owner, group.description)
+    job = q.enqueue(run_task, group_name, group.owner, group.description)
 
     return {"job": str(job)}
