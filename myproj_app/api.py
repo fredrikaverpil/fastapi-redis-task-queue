@@ -25,13 +25,13 @@ class Group(BaseModel):
 
 
 @app.get("/hello")
-def hello():
+async def hello():
     """Test endpoint"""
     return {"hello": "world"}
 
 
 @app.post("/groups/{group_name}", status_code=201)
-def addTask(group_name: str, group: Group):
+async def addTask(group_name: str, group: Group):
     """
     Adds tasks to worker queue.
     Expects body as dictionary matching the Group class.
