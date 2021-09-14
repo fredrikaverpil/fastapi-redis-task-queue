@@ -1,4 +1,4 @@
-# FastAPI with Redis job queue
+# FastAPI with Redis task queue
 
 ## Run
 
