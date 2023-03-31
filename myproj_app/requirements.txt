@@ -7,7 +7,7 @@ mypy-extensions==0.4.3
 pathspec==0.9.0
 platformdirs==2.3.0
 pydantic==1.8.2
-redis==4.5.3
+redis==4.5.4
 regex==2021.8.28
 rq==1.10.0
 starlette==0.25.0
